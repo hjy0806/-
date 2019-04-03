@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style type="text/css">
+        .default{
+            width: 140px;
+            border: 1px solid #eee;
+            padding:10px;
+            box-sizing:border-box;
+            position: relative;
+        }
+        .edit{
+            position: absolute;
+            right:4px;
+            top:4px;
+            width: 20px;
+            height: 20px;
+            background:url(/images/pencile.svg);
+            background-size:cover;
+            display:none;
+            cursor: pointer;
+        }
+        .default:hover .edit{
+            display:block;
+        }
+        .default img{
+            width: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <form action="/api/uploadAvatar" method="POST" encType = "multipart/form-data" id="form">
+        <input type="file" name="adminavatar" hidden id="adminavatar" />
+        <input type="submit" value="提交" hidden />
+    </form>
+    <div class="default">
+        <span class="edit"></span>
+
+        <img src="/api/getAvatar" alt="" />
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="../js-lib/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+    // 点击包边机按钮的时候，等价于点击了 file控件， 弹出选择图片的对话框
+    $(".edit").click(function(){
+        // trigger自动 将某个事件应用到DOM节点上。
+        $("#adminavatar").trigger("click");
+    });
+    // 当 file 控件 change 变化了 ，此时模表单提交的功能
+    $("#adminavatar").change(function(){
+        // 让form表单做提交
+        // 我们的JQ对象 变成原生JS对象 ，有两种方法 一个是 索引枚举 ，一个是 get(索引值)
+        $("#form")[0].submit();
+
+        // 当用户已经选定图片了，表单就会提交，瞬间释放出来一个弹出层
+        window.parent.openXuanfu();
+    })
+</script>
+
+
+
